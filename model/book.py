@@ -1,7 +1,11 @@
-from app import db
 
 
-class Book(db.Model):
+from db import db, Base
+
+
+
+
+class Book(Base):
     __tablename__ = 'books'
 
     id = db.Column(db.Integer, primary_key=True)
@@ -24,5 +28,4 @@ class Book(db.Model):
             'author': self.author,
             'published': self.published
         }
-
 

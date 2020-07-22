@@ -13,6 +13,9 @@ psycopg2-binary = "^2.8.5"
 flask_script = "^2.0.6"
 factory-boy = "^2.12.0"
 JetKit-Flask = "^9.0.1"
+graphene = "^2.1.8"
+graphene_sqlalchemy = "^2.3.0"
+flask_graphql = "^2.0.1"
 
 [tool.poetry.dev-dependencies]
 faker = "^4.1.1"

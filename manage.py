@@ -2,7 +2,7 @@ from flask_script import Manager
 from flask_migrate import Migrate, MigrateCommand
 from app import app, db
 from fixtures import seed_db
-from models import *
+from model import *
 
 migrate = Migrate(app, db)
 manager = Manager(app)

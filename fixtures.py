@@ -1,9 +1,9 @@
 from faker import Factory as FakerFactory
-from models import (
+from model import (
     Book
 )
 import factory
-from app import db
+from db import db
 from jetkit.db import Session
 
 
