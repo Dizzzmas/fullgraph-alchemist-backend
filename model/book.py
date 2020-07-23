@@ -1,8 +1,4 @@
-
-
 from db import db, Base
-
-
 
 
 class Book(Base):
