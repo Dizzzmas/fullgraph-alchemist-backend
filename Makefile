@@ -8,11 +8,11 @@ flask-init-db:
 	flask init-db
 
 dropcreatedb:
-	dropdb fullgraph_alchemist
+	dropdb fullgraph_alchemist --if-exists
 	createdb fullgraph_alchemist
 
 seed:
-	%(PYTHON) flask seed
+	$(PYTHON) flask seed
 
 run:
 	FLASK_ENV=development flask run --reload --without-threads
