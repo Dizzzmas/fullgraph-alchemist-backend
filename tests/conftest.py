@@ -4,7 +4,7 @@ import pytest
 from graphene.test import Client as GrapheneClient
 from urllib.parse import urlparse
 
-from graphene_boilerplate.app import create_app
+from app import create_app
 from graphene_boilerplate.ext import db
 from graphene_boilerplate.schema import schema
 

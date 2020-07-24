@@ -1,8 +1,9 @@
 from flask import Flask
 from flask_graphql import GraphQLView
+from commands import init_cli
 from graphene_boilerplate.ext import db
 from graphene_boilerplate.schema import schema
-
+from flask_script import Manager
 
 def create_app():
     app = Flask(__name__)
@@ -13,6 +14,9 @@ def create_app():
 
     db.init_app(app)
 
+    manager = Manager(app)
+    init_cli(app, manager)
+
     @app.route('/')
     def hello_world():
         return 'Go to /graphql'
@@ -20,7 +24,9 @@ def create_app():
     return app
 
 
+
 app = create_app()
+
 
 
 if __name__ == "__main__":
