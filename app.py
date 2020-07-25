@@ -4,6 +4,7 @@ from commands import init_cli
 from graphene_boilerplate.ext import db
 from graphene_boilerplate.schema import schema
 from flask_script import Manager
+from flask_migrate import Migrate
 
 def create_app():
     app = Flask(__name__)
@@ -16,6 +17,9 @@ def create_app():
 
     manager = Manager(app)
     init_cli(app, manager)
+
+    migrate = Migrate()
+    migrate.init_app(app, db)
 
     @app.route('/')
     def hello_world():
