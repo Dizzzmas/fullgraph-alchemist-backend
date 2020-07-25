@@ -10,7 +10,6 @@ test.ipynb
 local_config.*
 tests/__pycache__/*
 .ropeproject
-migrations
 src
 .cache
 _book

@@ -5,7 +5,7 @@ init-db: idb
 idb: dropcreatedb flask-init-db seed
 
 flask-init-db:
-	flask init-db
+	flask db upgrade
 
 dropcreatedb:
 	dropdb fullgraph_alchemist --if-exists
