@@ -1,5 +1,5 @@
 import graphene
-from graphene import relay
+from graphene import relay, InputObjectType
 from graphene_sqlalchemy import SQLAlchemyObjectType, SQLAlchemyConnectionField
 from graphene_boilerplate.ext import db
 from graphene_boilerplate.models import Item as ItemModel, Item
@@ -7,6 +7,8 @@ from graphene_boilerplate.models import Item as ItemModel, Item
 
 class ItemSchema(SQLAlchemyObjectType):
     id_ = graphene.Int(description="id of item")
+    key = graphene.String(description="item key")
+    value = graphene.JSONString(description="dictionary on the item object")
 
     class Meta:
         model = ItemModel
@@ -17,14 +19,11 @@ class Query(graphene.ObjectType):
     node = relay.Node.Field()
     all_items = graphene.List(
         ItemSchema,
-        id_=graphene.Int(),
-        key=graphene.String(),
-        value=graphene.JSONString(),
         page_size=graphene.Int(required=True),
         page_number=graphene.Int(required=True),
         description="get all items",
     )
-    item = graphene.Field(ItemSchema, id_=graphene.Int(), description="item with id",)
+    item = graphene.Field(ItemSchema, description="get a single item",)
 
     def resolve_item(self, context, **kwargs):
         query = ItemSchema.get_query(context)
@@ -57,6 +56,24 @@ class CreateItem(graphene.Mutation):
         return CreateItem(ok=True, item=item)
 
 
+class ItemInput(InputObjectType):
+    key = graphene.String()
+
+
+class CreateItems(graphene.Mutation):
+    class Arguments:
+        key_values = graphene.List(ItemInput)
+
+    ok = graphene.Boolean()
+    items = graphene.List(lambda: ItemSchema)
+
+    def mutate(self, info, key_values):
+        items = [ItemModel(key=key_value.get("key")) for key_value in key_values]
+        db.session.add_all(items)
+        db.session.commit()
+        return CreateItems(ok=True, items=items)
+
+
 class DeleteItem(graphene.Mutation):
     class Arguments:
         id_ = graphene.Int(required=False)
@@ -81,6 +98,7 @@ class DeleteItem(graphene.Mutation):
 
 class Mutations(graphene.ObjectType):
     create_item = CreateItem.Field()
+    create_items = CreateItems.Field()
     delete_item = DeleteItem.Field()
 
 
