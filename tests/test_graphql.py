@@ -8,9 +8,9 @@ def dumpdump(s):
 
 def test_crud(graphene_client):
     # test create object
-    sample_key = 'whatever'
-    sample_value = {'foo': 'bar'}
-    query = '''
+    sample_key = "whatever"
+    sample_value = {"foo": "bar"}
+    query = """
     mutation testCreateItem {
         createItem(key: %s, value: %s) {
             ok
@@ -20,20 +20,25 @@ def test_crud(graphene_client):
             }
         }
     }
-    ''' % (json.dumps(sample_key), dumpdump(sample_value))
+    """ % (
+        json.dumps(sample_key),
+        dumpdump(sample_value),
+    )
     res = graphene_client.execute(query)
-    assert res['data']['createItem']['ok'] is True
-    created_item = res['data']['createItem']['item']
-    assert created_item['key'] == sample_key
-    assert json.loads(created_item['value']) == sample_value
+    assert res["data"]["createItem"]["ok"] is True
+    created_item = res["data"]["createItem"]["item"]
+    assert created_item["key"] == sample_key
+    assert json.loads(created_item["value"]) == sample_value
 
     # test delete object
-    query = '''
+    query = """
     mutation testDeleteItem {
         deleteItem(key: %s) {
             ok
         }
     }
-    ''' % (json.dumps(sample_key))
+    """ % (
+        json.dumps(sample_key)
+    )
     res = graphene_client.execute(query)
-    assert res['data']['deleteItem']['ok'] is True
+    assert res["data"]["deleteItem"]["ok"] is True

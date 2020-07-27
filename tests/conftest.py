@@ -9,13 +9,13 @@ from graphene_boilerplate.ext import db
 from graphene_boilerplate.schema import schema
 
 
-json_headers = {'Content-Type': 'application/json'}
+json_headers = {"Content-Type": "application/json"}
 
 
 @pytest.fixture
 def app(request):
     app = create_app()
-    app.config['DEBUG'] = True
+    app.config["DEBUG"] = True
 
     ctx = app.app_context()
     ctx.push()
@@ -35,14 +35,16 @@ def client(app):
 
 @pytest.fixture
 def test_db(request, app):
-
     def check_service_host(uri):
         """只能在本地或者容器里跑测试"""
         u = urlparse(uri)
-        return u.hostname in ('localhost', '127.0.0.1') or 'hub.ricebook.net__ci__' in u.hostname
+        return (
+            u.hostname in ("localhost", "127.0.0.1")
+            or "hub.ricebook.net__ci__" in u.hostname
+        )
 
-    if not check_service_host(app.config['SQLALCHEMY_DATABASE_URI']):
-        raise Exception('Need to run test on localhost or in container')
+    if not check_service_host(app.config["SQLALCHEMY_DATABASE_URI"]):
+        raise Exception("Need to run test on localhost or in container")
 
     db.create_all()
 

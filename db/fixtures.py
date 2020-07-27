@@ -15,10 +15,12 @@ def seed_db():
     db.session.commit()
     print("Database seeded.")
 
+
 class SQLAFactory(factory.alchemy.SQLAlchemyModelFactory):
     class Meta:
         abstract = True
         sqlalchemy_session = Session
+
 
 class ItemFactory(SQLAFactory):
     class Meta:
@@ -26,6 +28,3 @@ class ItemFactory(SQLAFactory):
 
     key = factory.LazyFunction(faker.word)
     value = {"asd": "f"}
-
-
-

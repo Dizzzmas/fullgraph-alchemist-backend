@@ -36,7 +36,7 @@ class BaseModelMixin(db.Model):
         q = cls.query.order_by(cls.id.desc())
         if not any([start, limit]):
             return q.all()
-        return q[start:start + limit]
+        return q[start : start + limit]
 
     def update(self, **kwargs):
         for k, v in kwargs.items():
@@ -52,7 +52,7 @@ class BaseModelMixin(db.Model):
             db.session.commit()
         except sqlalchemy.orm.exc.ObjectDeletedError:
             db.session.rollback()
-            logger.warn('Error during deleting: Object %s already deleted', self)
+            logger.warn("Error during deleting: Object %s already deleted", self)
 
     def __eq__(self, other):
         return isinstance(other, self.__class__) and self.id == other.id
@@ -65,7 +65,7 @@ class BaseModelMixin(db.Model):
 
 
 class Item(BaseModelMixin):
-    __tablename__ = 'item'
+    __tablename__ = "item"
     key = db.Column(db.String(64), unique=True)
     value = db.Column(db.JSON)
 
