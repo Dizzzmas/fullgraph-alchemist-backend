@@ -60,6 +60,21 @@ class ItemInput(InputObjectType):
     key = graphene.String()
 
 
+class UpdateItem(graphene.Mutation):
+    class Arguments:
+        key = graphene.String()
+        value = graphene.JSONString()
+
+    ok = graphene.Boolean()
+    item = graphene.Field(lambda: ItemSchema)
+
+    def mutate(self, info, key, value):
+        item = ItemModel(key=key, value=value)
+        db.session.update(item)
+        db.session.commit()
+        return UpdateItem(ok=True, item=item)
+
+
 class CreateItems(graphene.Mutation):
     class Arguments:
         key_values = graphene.List(ItemInput)
@@ -100,6 +115,7 @@ class Mutations(graphene.ObjectType):
     create_item = CreateItem.Field()
     create_items = CreateItems.Field()
     delete_item = DeleteItem.Field()
+    update_item = UpdateItem.Field()
 
 
 schema = graphene.Schema(query=Query, mutation=Mutations)
