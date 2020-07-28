@@ -26,7 +26,7 @@ class UserFactory(SQLAFactory):
     class Meta:
         model = User
 
-    fullname = factory.LazyFunction(faker.name)
+    full_name = factory.LazyFunction(faker.name)
     email = factory.Sequence(lambda x: f"{x}-{faker.email}")
     password = factory.LazyFunction(faker.word)
 

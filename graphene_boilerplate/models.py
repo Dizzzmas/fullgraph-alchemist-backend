@@ -63,8 +63,9 @@ class BaseModelMixin(db.Model):
     def to_dict(self):
         return {c.key: getattr(self, c.key) for c in inspect(self).mapper.column_attrs}
 
-class User(db.Model):
+class User(BaseModelMixin):
     __tablename__ = "user"
+    id = db.Column(Integer, primary_key=True)
     full_name = db.Column(Text, nullable=False)
     email = db.Column(Text, nullable=False, unique=True)
     password = db.Column(Text, nullable=False)
