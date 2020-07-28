@@ -1,7 +1,7 @@
 import sqlalchemy.orm.exc
 from datetime import datetime
 from flask_sqlalchemy import sqlalchemy as sa
-from sqlalchemy import inspect, Text
+from sqlalchemy import inspect, Text, Integer, ForeignKey
 from graphene_boilerplate.ext import db
 from graphene_boilerplate.utils import logger
 
@@ -63,20 +63,21 @@ class BaseModelMixin(db.Model):
     def to_dict(self):
         return {c.key: getattr(self, c.key) for c in inspect(self).mapper.column_attrs}
 
+class User(db.Model):
+   full_name = db.Column(Text, nullable=False)
+   email = db.Column(Text, nullable=False, unique=True)
+   password = db.Column(Text, nullable=False)
+   items = db.relationship("Item", back_populates="user")
 
 class Item(BaseModelMixin):
     __tablename__ = "item"
     key = db.Column(db.String(64), unique=True)
     value = db.Column(db.JSON)
-    users = db.relationship("User", back_populates="items")
+    user = db.relationship("User", back_populates="items")
+    user_id = db.Column(Integer, ForeignKey("user.id", ondelete="CASCADE"), nullable=False )
 
     @classmethod
     def get_by_key(cls, key):
         return cls.query.filter_by(key=key).first()
 
 
-class User(db.Model):
-   full_name = db.Column(Text, nullable=False)
-   email = db.Column(Text, nullable=False, unique=True)
-   password = db.Column(Text, nullable=False)
-   items = db.relationship("Item", back_populates="users")
