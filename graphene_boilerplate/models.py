@@ -1,7 +1,7 @@
 import sqlalchemy.orm.exc
 from datetime import datetime
 from flask_sqlalchemy import sqlalchemy as sa
-from sqlalchemy import inspect, Text, Integer, ForeignKey
+from sqlalchemy import inspect, Text, Integer, ForeignKey, String
 from graphene_boilerplate.ext import db
 from graphene_boilerplate.utils import logger
 
@@ -64,6 +64,8 @@ class BaseModelMixin(db.Model):
         return {c.key: getattr(self, c.key) for c in inspect(self).mapper.column_attrs}
 
 class User(db.Model):
+   __tablename__ = "user"
+   key = db.Column(String(64), unique=True)
    full_name = db.Column(Text, nullable=False)
    email = db.Column(Text, nullable=False, unique=True)
    password = db.Column(Text, nullable=False)
