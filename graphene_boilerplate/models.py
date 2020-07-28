@@ -64,19 +64,22 @@ class BaseModelMixin(db.Model):
         return {c.key: getattr(self, c.key) for c in inspect(self).mapper.column_attrs}
 
 class User(db.Model):
-   __tablename__ = "user"
-   key = db.Column(String(64), unique=True)
-   full_name = db.Column(Text, nullable=False)
-   email = db.Column(Text, nullable=False, unique=True)
-   password = db.Column(Text, nullable=False)
-   items = db.relationship("Item", back_populates="user")
+    __tablename__ = "user"
+    full_name = db.Column(Text, nullable=False)
+    email = db.Column(Text, nullable=False, unique=True)
+    password = db.Column(Text, nullable=False)
+    items = db.relationship("Item", back_populates="user")
+
+    @classmethod
+    def get_by_key(cls, key):
+        return cls.query.filter_by(key=key).first()
 
 class Item(BaseModelMixin):
     __tablename__ = "item"
     key = db.Column(db.String(64), unique=True)
     value = db.Column(db.JSON)
     user = db.relationship("User", back_populates="items")
-    user_id = db.Column(Integer, ForeignKey("user.id", ondelete="CASCADE"), nullable=False )
+    user_id = db.Column(Integer, ForeignKey("user.id", ondelete="CASCADE"), nullable=False)
 
     @classmethod
     def get_by_key(cls, key):
