@@ -16,6 +16,8 @@ class ItemSchema(SQLAlchemyObjectType):
 
 
 class Query(graphene.ObjectType):
+
+
     node = relay.Node.Field()
     all_items = graphene.List(
         ItemSchema,
@@ -23,7 +25,7 @@ class Query(graphene.ObjectType):
         page_number=graphene.Int(required=True),
         description="get all items",
     )
-    item = graphene.Field(ItemSchema, description="get a single item",)
+    item = graphene.Field(ItemSchema, id_=graphene.Int(), description="get a single item",)
 
     def resolve_item(self, context, **kwargs):
         query = ItemSchema.get_query(context)
@@ -39,6 +41,8 @@ class Query(graphene.ObjectType):
             .offset(kwargs.get("page_size") * kwargs.get("page_number"))
             .all()
         )
+
+
 
 
 class CreateItem(graphene.Mutation):
@@ -58,6 +62,23 @@ class CreateItem(graphene.Mutation):
 
 class ItemInput(InputObjectType):
     key = graphene.String()
+
+
+class UpdateItem(graphene.Mutation):
+    class Arguments:
+        key = graphene.String()
+        id_ = graphene.Int()
+
+    ok = graphene.Boolean()
+    item = graphene.Field(lambda: ItemSchema)
+
+    def mutate(self, info, key, id_):
+        item = Item.query.get(id_)
+
+        if item:
+            item.key = key
+        db.session.commit()
+        return UpdateItem(ok=True, item=item)
 
 
 class CreateItems(graphene.Mutation):
@@ -100,6 +121,7 @@ class Mutations(graphene.ObjectType):
     create_item = CreateItem.Field()
     create_items = CreateItems.Field()
     delete_item = DeleteItem.Field()
+    update_item = UpdateItem.Field()
 
 
 schema = graphene.Schema(query=Query, mutation=Mutations)

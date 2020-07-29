@@ -22,6 +22,7 @@ Flask-Migrate = "^2.5.3"
 autoenv = "^1.0.0"
 black = "^19.10b0"
 pre-commit = "^2.6.0"
+python-dotenv = "^0.14.0"
 
 [tool.poetry.dev-dependencies]
 

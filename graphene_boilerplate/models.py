@@ -1,7 +1,10 @@
 import sqlalchemy.orm.exc
 from datetime import datetime
 from flask_sqlalchemy import sqlalchemy as sa
-from sqlalchemy import inspect
+from sqlalchemy import inspect, Text, Integer, ForeignKey, String
+from sqlalchemy.ext.hybrid import hybrid_property
+from werkzeug.security import generate_password_hash
+
 from graphene_boilerplate.ext import db
 from graphene_boilerplate.utils import logger
 
@@ -64,10 +67,31 @@ class BaseModelMixin(db.Model):
         return {c.key: getattr(self, c.key) for c in inspect(self).mapper.column_attrs}
 
 
+class User(BaseModelMixin):
+    __tablename__ = "user"
+    full_name = db.Column(Text, nullable=False)
+    email = db.Column(Text, nullable=False, unique=True)
+    items = db.relationship("Item", back_populates="user")
+
+    _password = db.Column(Text, nullable=False)
+
+    @hybrid_property
+    def password(self):
+        return self._password
+
+    @password.setter  # type: ignore
+    def password(self, plaintext):
+        self._password = generate_password_hash(plaintext)
+
+
 class Item(BaseModelMixin):
     __tablename__ = "item"
     key = db.Column(db.String(64), unique=True)
     value = db.Column(db.JSON)
+    user = db.relationship("User", back_populates="items")
+    user_id = db.Column(
+        Integer, ForeignKey("user.id_", ondelete="CASCADE"), nullable=False
+    )
 
     @classmethod
     def get_by_key(cls, key):
