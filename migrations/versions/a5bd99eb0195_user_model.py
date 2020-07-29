@@ -1,4 +1,4 @@
-"""empty message
+"""User model
 
 Revision ID: a5bd99eb0195
 Revises: b64b2dcb690f
