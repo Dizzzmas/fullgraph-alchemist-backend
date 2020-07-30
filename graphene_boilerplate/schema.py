@@ -15,6 +15,7 @@ class ItemSchema(SQLAlchemyObjectType):
         model = ItemModel
         interfaces = (relay.Node,)
 
+
 class UserSchema(SQLAlchemyObjectType):
     id_ = graphene.Int(description="user's id")
     full_name = graphene.String(description="user full name")
@@ -23,6 +24,7 @@ class UserSchema(SQLAlchemyObjectType):
     class Meta:
         model = UserModel
         interfaces = (relay.Node,)
+
 
 class Query(graphene.ObjectType):
 
@@ -34,8 +36,6 @@ class Query(graphene.ObjectType):
         description="get all items",
     )
     item = graphene.Field(ItemSchema, id_=graphene.Int(), description="get a single item",)
-    user = graphene.Field(ItemSchema, id_=graphene.Int(), description="get a single user",)
-
 
     def resolve_item(self, context, **kwargs):
         query = ItemSchema.get_query(context)
@@ -46,7 +46,7 @@ class Query(graphene.ObjectType):
 
     def resolve_user(self, context, **kwargs):
         query = UserSchema.get_query(context)
-        for full_name, email in kwargs.items():
+        for full_name, email in kwargs.user():
             query = query.filter(getattr(User, full_name) == email)
         user = query.first()
         return user
@@ -58,8 +58,6 @@ class Query(graphene.ObjectType):
             .offset(kwargs.get("page_size") * kwargs.get("page_number"))
             .all()
         )
-
-
 
 
 class CreateItem(graphene.Mutation):
@@ -141,4 +139,4 @@ class Mutations(graphene.ObjectType):
     update_item = UpdateItem.Field()
 
 
-schema = graphene.Schema(query=Query, mutation=Mutations)
+schema = graphene.Schema(query=Query, mutation=Mutations,)
