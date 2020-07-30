@@ -3,6 +3,7 @@ from graphene import relay, InputObjectType
 from graphene_sqlalchemy import SQLAlchemyObjectType, SQLAlchemyConnectionField
 from graphene_boilerplate.ext import db
 from graphene_boilerplate.models import Item as ItemModel, Item
+from graphene_boilerplate.models import User as UserModel, User
 
 
 class ItemSchema(SQLAlchemyObjectType):
@@ -14,9 +15,16 @@ class ItemSchema(SQLAlchemyObjectType):
         model = ItemModel
         interfaces = (relay.Node,)
 
+class UserSchema(SQLAlchemyObjectType):
+    id_ = graphene.Int(description="user's id")
+    full_name = graphene.String(description="user full name")
+    email = graphene.String(description="user email")
+
+    class Meta:
+        model = UserModel
+        interfaces = (relay.Node,)
 
 class Query(graphene.ObjectType):
-
 
     node = relay.Node.Field()
     all_items = graphene.List(
@@ -26,6 +34,8 @@ class Query(graphene.ObjectType):
         description="get all items",
     )
     item = graphene.Field(ItemSchema, id_=graphene.Int(), description="get a single item",)
+    user = graphene.Field(ItemSchema, id_=graphene.Int(), description="get a single user",)
+
 
     def resolve_item(self, context, **kwargs):
         query = ItemSchema.get_query(context)
@@ -33,6 +43,13 @@ class Query(graphene.ObjectType):
             query = query.filter(getattr(Item, key) == value)
         item = query.first()
         return item
+
+    def resolve_user(self, context, **kwargs):
+        query = UserSchema.get_query(context)
+        for full_name, email in kwargs.items():
+            query = query.filter(getattr(User, full_name) == email)
+        user = query.first()
+        return user
 
     def resolve_all_items(self, context, **kwargs):
         return (
