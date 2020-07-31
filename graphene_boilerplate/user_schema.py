@@ -18,11 +18,11 @@ class UserSchema(SQLAlchemyObjectType):
 class Query(graphene.ObjectType):
 
     node = relay.Node.Field()
-    all_items = graphene.List(
+    all_users = graphene.List(
         UserSchema,
         page_size=graphene.Int(required=True),
         page_number=graphene.Int(required=True),
-        description="get all items",
+        description="get all users",
     )
     user = graphene.Field(UserSchema, id_=graphene.Int(), description="get a single user", )
 
