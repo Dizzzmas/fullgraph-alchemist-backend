@@ -6,7 +6,7 @@ from urllib.parse import urlparse
 
 from app import create_app
 from graphene_boilerplate.ext import db
-from graphene_boilerplate.schema import schema
+from graphene_boilerplate.gql import schema
 
 
 json_headers = {"Content-Type": "application/json"}

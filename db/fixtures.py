@@ -26,7 +26,7 @@ class ItemFactory(SQLAFactory):
     class Meta:
         model = Item
 
-    key = factory.LazyFunction(faker.word)
+    key = factory.Sequence(lambda x: f"{x}-{faker.word()}")
     value = {"asd": "f"}
 
 
@@ -35,6 +35,6 @@ class UserFactory(SQLAFactory):
         model = User
 
     full_name = factory.LazyFunction(faker.name)
-    email = factory.Sequence(lambda x: f"{x}-{faker.email}")
+    email = factory.Sequence(lambda x: f"{x}-{faker.email()}")
     password = factory.LazyFunction(faker.word)
     items = factory.List([factory.SubFactory(ItemFactory) for _ in range(2)])

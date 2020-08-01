@@ -2,9 +2,10 @@ from flask import Flask
 from flask_graphql import GraphQLView
 from commands import init_cli
 from graphene_boilerplate.ext import db
-from graphene_boilerplate.schema import schema
 from flask_script import Manager
 from flask_migrate import Migrate
+
+from graphene_boilerplate.schema import schema
 
 
 def create_app():
