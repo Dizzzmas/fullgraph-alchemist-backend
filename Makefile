@@ -1,5 +1,6 @@
 .PHONY: idb seed flask-init-db run
 
+#init DB
 init-db: idb
 idb: dropcreatedb flask-init-db seed
 
