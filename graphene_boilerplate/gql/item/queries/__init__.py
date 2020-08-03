@@ -13,3 +13,13 @@ def resolve_item(root, context, **kwargs):
         abort(404, message=f"No item with id: {id_}")
 
     return item
+
+
+def resolve_all_items(self, context, **kwargs):
+    """Get all items."""
+    return (
+        ItemSchema.get_query(context)
+        .limit(kwargs.get("page_size"))
+        .offset(kwargs.get("page_size") * kwargs.get("page_number"))
+        .all()
+    )

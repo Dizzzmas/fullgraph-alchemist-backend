@@ -13,3 +13,13 @@ def resolve_user(root, context, **kwargs):
         abort(404, message=f"No user with id: {id_}")
 
     return user
+
+
+def resolve_all_items(self, context, **kwargs):
+    """Get all users."""
+    return (
+        UserSchema.get_query(context)
+        .limit(kwargs.get("page_size"))
+        .offset(kwargs.get("page_size") * kwargs.get("page_number"))
+        .all()
+    )

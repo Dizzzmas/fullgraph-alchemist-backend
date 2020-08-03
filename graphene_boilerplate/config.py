@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from smart_getenv import getenv
 
 
