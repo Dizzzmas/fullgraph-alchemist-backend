@@ -2,7 +2,7 @@ import graphene
 from graphene import relay
 from graphene_sqlalchemy import SQLAlchemyObjectType
 from graphene_boilerplate import Item
-from graphene_boilerplate.user_schema import UserSchema
+from graphene_boilerplate.gql.user.fields import UserSchema
 
 
 class ItemSchema(SQLAlchemyObjectType):

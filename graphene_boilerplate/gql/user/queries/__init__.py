@@ -1,4 +1,4 @@
-from graphene_boilerplate.user_schema import UserSchema
+from graphene_boilerplate.gql.user.fields import UserSchema
 from jetkit.api import abort
 
 
