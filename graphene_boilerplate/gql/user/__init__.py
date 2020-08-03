@@ -1,6 +1,6 @@
 import graphene
 from graphene_boilerplate.gql.user.queries import resolve_user
-from graphene_boilerplate.user_schema import UserSchema
+from graphene_boilerplate.gql.user.fields import UserSchema
 
 
 class UserQuery(graphene.ObjectType):

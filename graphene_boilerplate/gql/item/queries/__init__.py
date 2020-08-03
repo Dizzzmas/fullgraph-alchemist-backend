@@ -16,9 +16,10 @@ def resolve_item(root, context, **kwargs):
 
 
 def resolve_all_items(self, context, **kwargs):
-         return (
-             ItemSchema.get_query(context)
-             .limit(kwargs.get("page_size"))
-             .offset(kwargs.get("page_size") * kwargs.get("page_number"))
-             .all()
-         )
+    """Get all items."""
+    return (
+        ItemSchema.get_query(context)
+        .limit(kwargs.get("page_size"))
+        .offset(kwargs.get("page_size") * kwargs.get("page_number"))
+        .all()
+    )
