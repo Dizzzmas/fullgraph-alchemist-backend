@@ -1,15 +1,15 @@
-from graphene_boilerplate.user_schema import UserSchema
+from graphene_boilerplate.gql.user.schema import UserSchema
 from jetkit.api import abort
 
 
 def resolve_user(root, context, **kwargs):
-    """Get user by id."""
+    """Get user by id_."""
     query = UserSchema.get_query(context)
     id_ = kwargs.get("id_")
 
     user = query.get(id_)
 
     if not user:
-        abort(404, message=f"No user with id: {id_}")
+        abort(404, message=f"No user with id_: {id_}")
 
     return user

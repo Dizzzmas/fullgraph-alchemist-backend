@@ -1,10 +1,10 @@
-from graphene_boilerplate.ext import db
+from graphene_boilerplate.db import db
 
 
 def init_cli(app, manager):
     if app.debug:
 
-        from db.fixtures import seed_db
+        from graphene_boilerplate.db.fixtures import seed_db
 
         @app.cli.command("seed", help="Seed DB with test data")
         def seed_db_cmd():

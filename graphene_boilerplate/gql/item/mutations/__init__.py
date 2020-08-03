@@ -1,7 +1,7 @@
 import graphene
-from graphene_boilerplate import Item
-from graphene_boilerplate.ext import db
-from graphene_boilerplate.gql.item import ItemSchema
+from graphene_boilerplate.model import Item
+from graphene_boilerplate.db import db
+from graphene_boilerplate.gql.item.schema import ItemSchema
 
 
 class CreateItemMutation(graphene.Mutation):

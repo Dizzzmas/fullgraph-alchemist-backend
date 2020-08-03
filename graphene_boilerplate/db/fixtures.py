@@ -1,6 +1,6 @@
 from faker import Factory as FakerFactory
-from graphene_boilerplate.ext import db
-from graphene_boilerplate import Item, User
+from graphene_boilerplate.db import db
+from graphene_boilerplate.model import Item, User
 from jetkit.db import Session
 import factory
 

@@ -5,7 +5,7 @@ from graphene.test import Client as GrapheneClient
 from urllib.parse import urlparse
 
 from app import create_app
-from graphene_boilerplate.ext import db
+from graphene_boilerplate.db import db
 from graphene_boilerplate.gql import schema
 
 

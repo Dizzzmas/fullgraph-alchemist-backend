@@ -1,13 +1,13 @@
 import graphene
 from graphene import relay, InputObjectType
 from graphene_sqlalchemy import SQLAlchemyObjectType, SQLAlchemyConnectionField
-from graphene_boilerplate.ext import db
-from graphene_boilerplate.models import Item as ItemModel, Item
-from graphene_boilerplate.models import User as UserModel, User
+from graphene_boilerplate.db import db
+from graphene_boilerplate.model import Item as ItemModel, Item
+from graphene_boilerplate.model import User as UserModel, User
 
 #
 # class ItemSchema(SQLAlchemyObjectType):
-#     id_ = graphene.Int(description="id of item")
+#     id_ = graphene.Int(description="id_ of item")
 #     key = graphene.String(description="item key")
 #     value = graphene.JSONString(description="dictionary on the item object")
 #
@@ -17,7 +17,7 @@ from graphene_boilerplate.models import User as UserModel, User
 #
 #
 # class UserSchema(SQLAlchemyObjectType):
-#     id_ = graphene.Int(description="user's id")
+#     id_ = graphene.Int(description="user's id_")
 #     full_name = graphene.String(description="user full name")
 #     email = graphene.String(description="user email")
 #

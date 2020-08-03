@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_graphql import GraphQLView
 from commands import init_cli
-from graphene_boilerplate.ext import db
+from graphene_boilerplate.db import db
 from flask_script import Manager
 from flask_migrate import Migrate
 

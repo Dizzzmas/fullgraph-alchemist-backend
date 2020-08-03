@@ -1,2 +1,2 @@
-from graphene_boilerplate.models import User
-from graphene_boilerplate.models import Item
+from graphene_boilerplate.model import User
+from graphene_boilerplate.model import Item
