@@ -1,6 +1,6 @@
 import graphene
 from graphene_boilerplate.gql.item.schema import ItemSchema
-from graphene_boilerplate.gql.item.mutations import CreateItemMutation
+from graphene_boilerplate.gql.item.mutations import CreateItemMutation, CreateItems, DeleteItem, UpdateItem
 from graphene_boilerplate.gql.item.queries import resolve_item
 
 
@@ -15,3 +15,7 @@ class ItemQuery(graphene.ObjectType):
 
 class ItemMutation(graphene.ObjectType):
     create_item = CreateItemMutation.Field()
+    create_items = CreateItems.Field()
+    delete_item = DeleteItem.Field()
+    update_item = UpdateItem.Field()
+

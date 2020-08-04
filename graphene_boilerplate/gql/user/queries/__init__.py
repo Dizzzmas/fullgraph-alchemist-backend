@@ -6,7 +6,6 @@ def resolve_user(root, context, **kwargs):
     """Get user by id_."""
     query = UserSchema.get_query(context)
     id_ = kwargs.get("id_")
-
     user = query.get(id_)
 
     if not user:
