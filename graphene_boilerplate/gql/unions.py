@@ -1,21 +1,8 @@
 import graphene
 from flask_graphql_auth import AuthInfoField
-
 from graphene_boilerplate.gql.auth.fields import ResponseMessageField, AccountResults, PostResults
 
-
-AccountUnion = type("AccountUnion", (graphene.Union,), {
-    "Meta": type("Meta", (), {
-        "types": (AccountResults, ResponseMessageField, AuthInfoField)
-    })
-})
-
-
-PostUnion = type('PostUnion', (graphene.Union, ), {
-    "Meta": type("Meta", (), {
-        "types": (PostResults, ResponseMessageField, AuthInfoField)
-    })
-})
+# TODO: Make sure unions work properly
 
 
 class MutationUnion:

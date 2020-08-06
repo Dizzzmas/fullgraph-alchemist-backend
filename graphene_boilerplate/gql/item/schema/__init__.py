@@ -11,6 +11,7 @@ class ItemSchema(SQLAlchemyObjectType):
     value = graphene.JSONString(description="dictionary on the item object")
     user = graphene.Field(UserSchema, description="user who owns the item")
 
+
     class Meta:
         model = Item
         interfaces = (relay.Node,)

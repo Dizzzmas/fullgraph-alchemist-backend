@@ -8,6 +8,7 @@ class ItemQuery(graphene.ObjectType):
     item = graphene.Field(
         type=ItemSchema,
         id_=graphene.Int(required=True),
+        token=graphene.String(),
         resolver=resolve_item,
         description="Get item by id_",
     )

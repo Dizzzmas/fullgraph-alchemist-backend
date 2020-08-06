@@ -20,6 +20,5 @@ class User(db.Model):
     def password(self, plaintext):
         self._password = generate_password_hash(plaintext)
 
-    @classmethod
     def is_correct_password(self, plaintext):
         return check_password_hash(self._password, plaintext)
