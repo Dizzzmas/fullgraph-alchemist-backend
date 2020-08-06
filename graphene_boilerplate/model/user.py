@@ -1,6 +1,6 @@
 from sqlalchemy import Text
 from sqlalchemy.ext.hybrid import hybrid_property
-from werkzeug.security import generate_password_hash
+from werkzeug.security import generate_password_hash, check_password_hash
 from graphene_boilerplate.db import db
 
 
@@ -19,3 +19,7 @@ class User(db.Model):
     @password.setter  # type: ignore
     def password(self, plaintext):
         self._password = generate_password_hash(plaintext)
+
+    @classmethod
+    def is_correct_password(self, plaintext):
+        return check_password_hash(self._password, plaintext)
