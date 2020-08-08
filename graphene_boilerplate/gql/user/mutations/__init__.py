@@ -1,10 +1,5 @@
-from uuid import uuid4
-
 import graphene
-from flask_graphql_auth import create_access_token, create_refresh_token
 from graphene import InputObjectType
-
-from graphene_boilerplate.gql.auth.fields import AuthField, ResponseMessageField
 from graphene_boilerplate.model import User
 from graphene_boilerplate.db import db
 from graphene_boilerplate.gql.user.schema import UserSchema
@@ -13,37 +8,37 @@ from graphene_boilerplate.gql.user.schema import UserSchema
 class CreateUserMutation(graphene.Mutation):
     class Arguments:
         full_name = graphene.String()
-        user_id = graphene.Int() #Nani?
+        user_id = graphene.Int()  # Nani?
 
     ok = graphene.Boolean()
     user = graphene.Field(lambda: UserSchema)
 
     def mutate(self, info, full_name, user_id):
-        user = User(full_name=full_name, user_id=user_id) #Nani?
+        user = User(full_name=full_name, user_id=user_id)  # Nani?
         db.session.add(user)
         db.session.commit()
-        return CreateUserMutation(ok=True, user=user) #Nani?
+        return CreateUserMutation(ok=True, user=user)  # Nani?
 
 
 class UserInput(InputObjectType):
-    full_name = graphene.String() #Nani?
+    full_name = graphene.String()  # Nani?
 
 
 class UpdateUser(graphene.Mutation):
-     class Arguments:
-         full_name = graphene.String()
-         id_ = graphene.Int()
+    class Arguments:
+        full_name = graphene.String()
+        id_ = graphene.Int()
 
-     ok = graphene.Boolean()
-     user = graphene.Field(lambda: UserSchema)
+    ok = graphene.Boolean()
+    user = graphene.Field(lambda: UserSchema)
 
-     def mutate(self, info, full_name, id_):
-         user = User.query.get(id_)
+    def mutate(self, info, full_name, id_):
+        user = User.query.get(id_)
 
-         if user:
-             user.full_name = full_name
-         db.session.commit()
-         return UpdateUser(ok=True, user=user) #Nani?
+        if user:
+            user.full_name = full_name
+        db.session.commit()
+        return UpdateUser(ok=True, user=user)  # Nani?
 
 
 class CreateUsers(graphene.Mutation):
@@ -54,7 +49,10 @@ class CreateUsers(graphene.Mutation):
     users = graphene.List(lambda: UserSchema)
 
     def mutate(self, info, full_name_values):
-        users = [User(full_name=full_name_value.get("full_name")) for full_name_value in full_name_values]
+        users = [
+            User(full_name=full_name_value.get("full_name"))
+            for full_name_value in full_name_values
+        ]
         db.session.add_all(users)
         db.session.commit()
         return CreateUsers(ok=True, users=users)

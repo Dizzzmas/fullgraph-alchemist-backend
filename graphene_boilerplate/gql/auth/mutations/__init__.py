@@ -7,7 +7,8 @@ from flask_graphql_auth import (
 )
 from graphene_boilerplate import User
 from graphene_boilerplate.db import db
-from graphene_boilerplate.gql.auth.fields import AuthField, ResponseMessageField
+from graphene_boilerplate.gql.auth.fields import AuthField
+from graphene_boilerplate.gql.fields import ResponseMessageField
 from graphene_boilerplate.gql.unions import AuthUnion
 from graphene_boilerplate.gql.user import UserSchema
 

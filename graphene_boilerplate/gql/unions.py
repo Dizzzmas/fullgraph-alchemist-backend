@@ -1,8 +1,6 @@
 import graphene
-from graphene_boilerplate.gql.auth.fields import ResponseMessageField, AuthField
-
-
-# TODO: Make sure unions work properly
+from graphene_boilerplate.gql.auth.fields import AuthField
+from graphene_boilerplate.gql.fields import ResponseMessageField
 
 
 class MutationUnion:
