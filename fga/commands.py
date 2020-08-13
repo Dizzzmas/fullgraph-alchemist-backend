@@ -1,10 +1,10 @@
 from fga.db import db
+import flask_migrate
+from fga.db.fixtures import seed_db
 
 
 def init_cli(app, manager):
     if app.debug:
-
-        from fga.db.fixtures import seed_db
 
         @app.cli.command("seed", help="Seed DB with test data")
         def seed_db_cmd():
@@ -41,3 +41,30 @@ def init_cli(app, manager):
             pprint.pprint(app.config)
 
         manager.add_command(config_cmd)
+
+
+def migrate_handler(event, context):
+    from app import app
+
+    with app.app_context():
+        flask_migrate.upgrade()
+    return "Migrated"
+
+
+def seed_handler(event, context):
+    """Lambda entry point."""
+    from app import app
+
+    with app.app_context():
+        seed_db()
+
+    return "Seeded DB."
+
+
+def init_handler(event, context):
+    from app import app
+
+    with app.app_context():
+        # drop_all_tables(app=app)
+        db.create_all(app=app)
+    return "DB initialized."

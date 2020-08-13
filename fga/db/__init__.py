@@ -16,3 +16,6 @@ class BaseModel(JKBaseModel):
 
 # initialize our XRay?FlaskSQLAlchemy instance
 db: SQLAlchemy = SQLA(model_class=BaseModel, query_class=BaseQuery)
+
+# load all model classes now
+import fga.model  # noqa: F811 F401
