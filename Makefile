@@ -8,8 +8,8 @@ flask-init-db:
 	flask db upgrade
 
 dropcreatedb:
-	dropdb fullgraph_alchemist --if-exists
-	createdb fullgraph_alchemist
+	dropdb fga --if-exists
+	createdb fga
 
 seed:
 	$(PYTHON) flask seed

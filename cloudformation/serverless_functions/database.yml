@@ -1,0 +1,17 @@
+migrate:
+  handler: fga/commands.migrate_handler
+  timeout: 300
+  layers: ${self:custom.layers.default}
+  vpc: ${self:custom.vpc}
+
+seed:
+  handler: fga/commands.seed_handler
+  layers: ${self:custom.layers.default}
+  timeout: 120
+  vpc: ${self:custom.vpc}
+
+initDb:
+  handler: fga/commands.init_handler
+  layers: ${self:custom.layers.default}
+  timeout: 120
+  vpc: ${self:custom.vpc}

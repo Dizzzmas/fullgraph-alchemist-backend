@@ -1,0 +1,15 @@
+{
+  "scripts": {
+    "sls-package": "sls package"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "husky": "latest",
+    "serverless": "latest",
+    "serverless-pseudo-parameters": "^2.5.0",
+    "serverless-python-requirements": "^5.1.0",
+    "serverless-stack-termination-protection": "^1.0.0",
+    "serverless-wsgi": "^1.7.4"
+  },
+  "name": "fga"
+}

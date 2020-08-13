@@ -1,0 +1,9 @@
+app:  # main flask entry point
+    handler: wsgi_handler.handler
+    events:
+      - http: ANY /
+      - http: 'ANY {proxy+}'
+    memorySize: 512
+    layers: ${self:custom.layers.default}
+    timeout: 30
+    vpc: ${self:custom.vpc}
