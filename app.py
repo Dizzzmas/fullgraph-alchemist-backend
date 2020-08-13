@@ -1,10 +1,11 @@
 from flask import Flask
 from flask_graphql import GraphQLView
 from commands import init_cli
-from graphene_boilerplate.ext import db
-from graphene_boilerplate.schema import schema
+from fga.db import db
 from flask_script import Manager
 from flask_migrate import Migrate
+from flask_graphql_auth import GraphQLAuth
+from fga.schema import schema
 
 
 def create_app():
@@ -23,6 +24,8 @@ def create_app():
 
     manager = Manager(app)
     init_cli(app, manager)
+
+    GraphQLAuth(app)
 
     migrate = Migrate()
     migrate.init_app(app, db)

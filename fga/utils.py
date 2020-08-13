@@ -1,6 +1,6 @@
 import logging
 
-from graphene_boilerplate.config import LOGGER_NAME, DEBUG
+from fga.config import LOGGER_NAME, DEBUG
 
 
 logger = logging.getLogger(LOGGER_NAME)
